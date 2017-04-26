@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>whbsppu | 简单、美好、奋发</title>
+    <title>如何给UIView的圆角设置阴影效果 | whbsppu</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="简单、美好、奋斗">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="whbsppu | 简单、美好、奋发">
+    <meta name="twitter:title" content="如何给UIView的圆角设置阴影效果 | whbsppu">
     <meta name="twitter:description" content="简单、美好、奋斗">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="whbsppu | 简单、美好、奋发">
+    <meta property="og:title" content="如何给UIView的圆角设置阴影效果 | whbsppu">
     <meta property="og:description" content="简单、美好、奋斗">
 
     
@@ -144,18 +144,19 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-04-26T08:21:45.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-04-26T08:21:45.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS/">iOS</a>
+ </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title"></h1>
+    <h1 class="post-title">如何给UIView的圆角设置阴影效果</h1>
   </header>
 
   <section class="post">
-    <hr>
-<h2 id="UIView圆角与阴影的关系"><a href="#UIView圆角与阴影的关系" class="headerlink" title="UIView圆角与阴影的关系"></a>UIView圆角与阴影的关系</h2><p>今天在工作中遇到一个问题，如何给已经设置圆角的view添加阴影效果。通常我们的做法是这样的：</p>
+    <p>今天在工作中遇到一个问题，如何给已经设置圆角的view添加阴影效果。通常我们的做法是这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">UIView *view = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];</div><div class="line"> view.backgroundColor = [UIColor redColor];</div><div class="line">  </div><div class="line"> // 设置圆角</div><div class="line"> view.layer.cornerRadius = 6;</div><div class="line"> view.layer.masksToBounds = YES;</div><div class="line"> </div><div class="line"> // 设置阴影</div><div class="line"> view.layer.shadowRadius = 6;</div><div class="line"> view.layer.shadowOffset = CGSizeMake(0,2);</div><div class="line"> view.layer.shadowColor = [UIColor blueColor].CGColor;</div><div class="line"> view.layer.shadowOpacity = 0.8;</div></pre></td></tr></table></figure>
 <p>但是显示的效果并非我们期望的那样：<br><img src="http://upload-images.jianshu.io/upload_images/2487015-4ebf2722bbf10131.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4A356817-C3F4-4F05-90B6-8AF983750683.png"></p>
 <p>为什么设置的阴影效果没有作用呢？<br>先理解setMasksToBounds的含义，setMasksToBounds表示对frame外的内容进行了裁减，只可显示frame内的内容。由于这种方法加的阴影在frame外，所以被裁减了。<br>如果想要达到即设置了圆角又设置阴影的效果，可以先把已经设置圆角的view1添加到view2中，view2的frame和view1相同。然后设置view2的阴影效果，这样便可以在视觉上看上去view1设置了圆角及阴影。具体代码如下：</p>
@@ -173,11 +174,10 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/26/使用KVC自定义UISearchBar的UI/" title=""></a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2016/03/03/使用KVC自定义UISearchBar的UI/" title="使用KVC自定义UISearchBar的UI">使用KVC自定义UISearchBar的UI</a></h2>
                 <p class="excerpt">
                 
-                
-使用KVC自定义UISearchBar的UI在日常工作中对于UISearchBar的操作主要集中在：
+                在日常工作中对于UISearchBar的操作主要集中在：
 
 设置UISearchBar中textfiled的边框及圆角
 设置占位文字的大小及颜色
@@ -186,10 +186,12 @@
 修改取消按钮的文本
 ….
 
-实现的方式有很多，就设置边框而言：可以设
+实现的方式有很多，就设置边框而言：可以设置背景图片实现效果；或者直接用UITextFi
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-26T08:20:19.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/26/使用KVC自定义UISearchBar的UI/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2016-03-03T02:46:46.000Z" class="post-list__meta--date date">2016-03-03</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/iOS/">iOS</a>
+</span><a class="btn-border-small" href="/2016/03/03/使用KVC自定义UISearchBar的UI/">继续阅读</a></div>
                            
             </div>
         
