@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="whbsppu" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://whbsspu.github.io/2017/04/21/view的组织及调用方案/"/>
+    <link rel="canonical" href="http://whbsspu.github.io/2017/04/26/UIView圆角与阴影的关系/"/>
 
                  
 </head>
@@ -144,7 +144,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-04-21T10:11:19.000Z" class="post-list__meta--date date">2017-04-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-04-26T08:21:45.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
@@ -154,14 +154,14 @@
   </header>
 
   <section class="post">
-    <h1 id="view的组织及调用方案"><a href="#view的组织及调用方案" class="headerlink" title="view的组织及调用方案"></a>view的组织及调用方案</h1><p>1、一般会在两种时机回去做view的架构：1）app还没开始开发 2）对已有app做彻底的重建。基于这两个特殊的原因，我们必须清楚的认识到：View层的架构一旦实现或者定性，在app发版后可修改的余地就非常小了，因为它跟业务关联最为密切，可能会牵一发而动全身。</p>
-<p>2、不要在viewDidLoad里初始化view然后add，这样的代码很难看，在viewDidLoad里面只做addSubView的事情，在viewWillAppear里面做一些form的更新，在viewWilllayoutSubview或者didLayoutSubview里做一些布局的事情，在viewDidAppear里面做Notification的监听之类的事情。至于view的初始化，交给getter方法去做。</p>
-<p>3、getter和setter方法都放到最后。</p>
-<p>4、正常情况下ViewController不应该有private methods，因为这些方法一般都是用来实现一些小功能，可以写成一个category或者一个模块。ViewController基本是大部分业务的主体，本身代码已经相当复杂，所以跟业务关联不大的东西尽量不要发在viewcontroller里。</p>
-<p>5、关于胖Model和瘦Model<br>胖Model包含了部分弱业务逻辑，目的是，controller从胖Model这里拿到数据之后，不用额外做操作或者只要做少量的操作就能够将数据直接应用在view上。<br>瘦Model值负责业务数据的表达，所有业务无论强弱一律扔到Controller。瘦Model的目的是，尽可能去编写细粒度的Model，然后配套各种helper类或方法来对弱业务做抽象，强业务依旧交给Controller。</p>
-<p>6、传递的参数越少，代码的耦合度相对而言就越小，或者说升级模块的代价就越小。</p>
-<p>7、自顶向下设计，自底向上实现，先测量后优化。</p>
-<p>8、继承是紧耦合的一种模式，主要的体现就在于前已发动全身。所以在实际的项目中建议用组合替代继承，大部分通过继承的情况，其实使用组合会更好。</p>
+    <hr>
+<h2 id="UIView圆角与阴影的关系"><a href="#UIView圆角与阴影的关系" class="headerlink" title="UIView圆角与阴影的关系"></a>UIView圆角与阴影的关系</h2><p>今天在工作中遇到一个问题，如何给已经设置圆角的view添加阴影效果。通常我们的做法是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">UIView *view = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];</div><div class="line"> view.backgroundColor = [UIColor redColor];</div><div class="line">  </div><div class="line"> // 设置圆角</div><div class="line"> view.layer.cornerRadius = 6;</div><div class="line"> view.layer.masksToBounds = YES;</div><div class="line"> </div><div class="line"> // 设置阴影</div><div class="line"> view.layer.shadowRadius = 6;</div><div class="line"> view.layer.shadowOffset = CGSizeMake(0,2);</div><div class="line"> view.layer.shadowColor = [UIColor blueColor].CGColor;</div><div class="line"> view.layer.shadowOpacity = 0.8;</div></pre></td></tr></table></figure>
+<p>但是显示的效果并非我们期望的那样：<br><img src="http://upload-images.jianshu.io/upload_images/2487015-4ebf2722bbf10131.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4A356817-C3F4-4F05-90B6-8AF983750683.png"></p>
+<p>为什么设置的阴影效果没有作用呢？<br>先理解setMasksToBounds的含义，setMasksToBounds表示对frame外的内容进行了裁减，只可显示frame内的内容。由于这种方法加的阴影在frame外，所以被裁减了。<br>如果想要达到即设置了圆角又设置阴影的效果，可以先把已经设置圆角的view1添加到view2中，view2的frame和view1相同。然后设置view2的阴影效果，这样便可以在视觉上看上去view1设置了圆角及阴影。具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];</div><div class="line"> view1.backgroundColor = [UIColor redColor];</div><div class="line"> view1.layer.cornerRadius = 6;</div><div class="line"> view1.layer.masksToBounds = YES;</div><div class="line"> </div><div class="line"> UIView *view2 = [[UIView alloc]initWithFrame:view1.bounds];</div><div class="line"> [view2 addSubview:view1];</div><div class="line"> view2.layer.shadowRadius = 6;</div><div class="line"> view2.layer.shadowOffset = CGSizeMake(0,2);</div><div class="line"> view2.layer.shadowColor = [UIColor blueColor].CGColor;</div><div class="line"> view2.layer.shadowOpacity = 0.8;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2487015-13f81d153531b800.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="0E5983F6-6DEF-42E3-ACB6-1B6984A7049E.png"></p>
 
   </section>
 
@@ -170,20 +170,30 @@
 <section class="read-more">
            
     
-        
-        
                
             <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/04/26/hello-world/" title="Hello World">Hello World</a></h2>
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/26/使用KVC自定义UISearchBar的UI/" title=""></a></h2>
                 <p class="excerpt">
                 
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+                
+使用KVC自定义UISearchBar的UI在日常工作中对于UISearchBar的操作主要集中在：
+
+设置UISearchBar中textfiled的边框及圆角
+设置占位文字的大小及颜色
+设置输入文字的大小及颜色
+修改搜索图标
+修改取消按钮的文本
+….
+
+实现的方式有很多，就设置边框而言：可以设
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-04-26T06:41:56.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/26/hello-world/">继续阅读</a></div>
-                       
+                <div class="post-list__meta"><time datetime="2017-04-26T08:20:19.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/26/使用KVC自定义UISearchBar的UI/">继续阅读</a></div>
+                           
             </div>
+        
+        
         
      
    

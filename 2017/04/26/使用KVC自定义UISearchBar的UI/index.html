@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>whbsppu | 简单、美好、奋发</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="简单、美好、奋斗">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="whbsppu | 简单、美好、奋发">
+    <meta name="twitter:description" content="简单、美好、奋斗">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="whbsppu | 简单、美好、奋发">
+    <meta property="og:description" content="简单、美好、奋斗">
+
+    
+    <meta name="author" content="whbsspu">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/avatar-small.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+    <link rel="alternate" type="application/rss+xml" title="whbsppu" href="/atom.xml">
+    
+
+    <link rel="canonical" href="http://whbsspu.github.io/2017/04/26/使用KVC自定义UISearchBar的UI/"/>
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 whbsppu 的主页"><img src="/images/avatar.jpg" width="80" alt="whbsppu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for whbsppu">whbsppu</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">简单、美好、奋发</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">不断地、持续地挑战自己的知识深度！</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+              <li class="navigation__item"><a href="/favourite/time.html">时光机</a></li>
+            
+              <li class="navigation__item"><a href="/aboutme">关于我</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="hbwang@3g.sina.cn" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/whbsspu" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+  <li class="navigation__item">
+    <a href="/atom.xml" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-purple"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-04-26T08:20:19.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title"></h1>
+  </header>
+
+  <section class="post">
+    <hr>
+<h2 id="使用KVC自定义UISearchBar的UI"><a href="#使用KVC自定义UISearchBar的UI" class="headerlink" title="使用KVC自定义UISearchBar的UI"></a>使用KVC自定义UISearchBar的UI</h2><p>在日常工作中对于UISearchBar的操作主要集中在：</p>
+<ul>
+<li>设置UISearchBar中textfiled的边框及圆角</li>
+<li>设置占位文字的大小及颜色</li>
+<li>设置输入文字的大小及颜色</li>
+<li>修改搜索图标</li>
+<li>修改取消按钮的文本</li>
+<li>….</li>
+</ul>
+<p>实现的方式有很多，就设置边框而言：可以设置背景图片实现效果；或者直接用UITextField来代替UISearchBar等等。但是以上的操作主要是集中在UISearchBar内部的UITextField上，因此获取到UISearchBar内部的UITextField便可以实现以上的效果：</p>
+<ul>
+<li>通过KVC获取子视图</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">UISearchBar *searchBar = [[UISearchBar alloc]init];</div><div class="line">// 获取内部子视图</div><div class="line">UITextField *searchField = [searchBar valueForKey:@&quot;_searchField&quot;]; </div><div class="line">UIView *backgroundView = [searchBar valueForKey:@&quot;_background&quot;];</div><div class="line">UIButton *cancelButton = [searchBar valueForKey:@&quot;_cancelButton&quot;];</div></pre></td></tr></table></figure>
+<ul>
+<li>改变输入框文本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">UITextField *searchField = [searchBar valueForKey:@&quot;_searchField&quot;]; </div><div class="line"></div><div class="line">// 设置输入文字的大小及颜色</div><div class="line">searchField.font = font(12);</div><div class="line">searchField.textColor = UIColorRgb(32,32,32);</div><div class="line"></div><div class="line">// 设置占位文字的大小及颜色</div><div class="line">[searchField setValue:UIColorRgb(197,197,197) forKeyPath:@&quot;_placeholderLabel.textColor&quot;];</div></pre></td></tr></table></figure>
+<ul>
+<li>设置输入框边框及圆角</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">UITextField *searchField = [searchBar valueForKey:@&quot;_searchField&quot;]; </div><div class="line"></div><div class="line">// 设置边框及圆角</div><div class="line">searchField.layer.cornerRadius = 4.0f;</div><div class="line">searchField.layer.masksToBounds = YES;</div><div class="line">searchField.layer.borderWidth = 0.5f;</div><div class="line">searchField.layer.borderColor = UIColorRgbAlpha(95,96,108,0.2).CGColor;</div></pre></td></tr></table></figure>
+<ul>
+<li>设置输入框内搜索图标</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">UITextField *searchField = [searchBar valueForKey:@&quot;_searchField&quot;]; </div><div class="line"></div><div class="line">// 设置searchField上的搜索图标</div><div class="line">UIImage *image = [UIImage imageNamed:@&quot;search&quot;];</div><div class="line">UIImageView *iView = [[UIImageView alloc] initWithImage:image];</div><div class="line">iView.frame = CGRectMake(0, 0, 15, 15);</div><div class="line">searchField.leftView = iView;</div></pre></td></tr></table></figure>
+<ul>
+<li>改变取消按钮的title</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIButton*cancelButton = [searchBar valueForKey:@&quot;_cancelButton&quot;]；</div><div class="line">[cancelButton setTitle:@&quot;Close&quot;forState:UIControlStateNormal];</div></pre></td></tr></table></figure>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/26/UIView圆角与阴影的关系/" title=""></a></h2>
+                <p class="excerpt">
+                
+                
+UIView圆角与阴影的关系今天在工作中遇到一个问题，如何给已经设置圆角的view添加阴影效果。通常我们的做法是这样的：
+123456789101112UIView *view = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-26T08:21:45.000Z" class="post-list__meta--date date">2017-04-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/26/UIView圆角与阴影的关系/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2017 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
+        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    
+</body>
+</html>
